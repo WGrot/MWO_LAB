@@ -1,5 +1,3 @@
-
-1. Historie dla użytkownika
 1. Jako użytkownik, chcę płacić za bilet kartą, gotówką lub telefonem, aby mieć
 większą elastyczność w wyborze metody płatności.
 2. Jako użytkownik, chcę otrzymać wyraźne instrukcje na ekranie, aby wiedzieć,
