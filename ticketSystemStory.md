@@ -1,5 +1,4 @@
-1. Jako system wsparcia technicznego, chcę automatycznie monitorować stan 
-biletomatów (np. brak papieru, awaria terminala), aby reagować na problemy w 
-krótkim czasie. 
-2. Jako system wsparcia technicznego, chcę wysyłać alerty o błędach i 
-anomaliach do serwisu, aby uniknąć przestojów w działaniu urządzenia.
+1. Jako system biletowy, chcę dostarczać aktualne dane o taryfach i typach 
+biletów do biletomatu, aby użytkownik miał zawsze poprawne informacje. 
+2. Jako system biletowy, chcę umożliwiać sprawdzenie ważności biletu w czasie 
+rzeczywistym, aby zapobiegać oszustwom. 
