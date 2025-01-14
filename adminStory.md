@@ -13,9 +13,9 @@ flowchart TD
     A("Administrator")
     B(["Synchronizacja danych"])
     C(["Powiadomienie o problemach synchronizacji"])
-    D(["Synchronizacja listy biletów"])
+    D(["Zarządzanie dostępnością biletów"])
 
-    A -.- D
+    A --- D
     B -.-> |Include| D
     D -.-> |Extend| C
 ```
