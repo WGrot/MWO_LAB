@@ -4,3 +4,20 @@ aby zapewnić zgodność z n
 rzeczywistym, aby monitorować wyniki finansowe. 
 3. Jako administrator, chcę konfigurować dostępne bilety, promocje i taryfy w 
 systemie centralnym, aby odzwierciedlać zmiany w ofercie. 
+
+## DIAGRAMY PRZYPADKÓW UŻYCIA
+### Zarządzanie dostępnością biletów
+
+```mermaid
+flowchart TD
+    A("Administrator")
+    B(["Synchronizacja danych"])
+    C(["Powiadomienie o problemach synchronizacji"])
+    D(["Synchronizacja listy biletów"])
+
+    A -.- D
+    B -.-> |Include| D
+    D -.-> |Extend| C
+```
+
+
