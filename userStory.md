@@ -15,8 +15,34 @@ elektroniczny bilet), aby móc korzystać z transportu zgodnie z przepisami.
 
 
 ## Diagram przypadków użycia
+### 2. Wybór języka
+Opis krokowy:
+1. Użytkownik uruchamia biletomat (Rozpoczęcie interakcji).
+2. System wyświetla ekran powitalny z opcjami wyboru języka (Wyświetlenie opcji 
+języka).
+3. Użytkownik wybiera preferowany język (Wybór języka).
+4. System dostosowuje interfejs do wybranego języka (Dostosowanie interfejsu).
+5. Użytkownik w dowolnym momencie może anulować proces (Anulowanie 
+transakcji).
+Relacje:
+• Include: Ustawienie domyślnego języka (Domyślny język).
+• Include: Anulowanie transakcji (Anulowanie transakcji).
+• Extend: Wyświetlenie listy popularnych języków (opcjonalne) (Lista 
+popularnych języków)
 
-### 5. Płatność za bilet
+```mermaid
+flowchart TD
+    D([Anulowanie transakcji])  
+    F(["Wybór języka"])
+    G(["Domyślny język"])
+    H(["Lista popularnych języków"])
+   
+    F -.-> |Include|G
+    H <-.- |Extend|F
+    F -.-> |Include|D
+```
+
+### Płatność za bilet
 Opis krokowy:
 1. Użytkownik wybiera metodę płatności (karta, gotówka, telefon) (Wybór metody
 płatności).
@@ -29,11 +55,32 @@ płatności).
 transakcji).
 
 
-
 ```mermaid
 flowchart TD
     A[Użytkownik] -->B([Płatność za bilet])
     B -.-> |Include| C([Weryfikacja metody płatnośći])
     B -.-> |Include| D([Anulowanie transakcji])
     E([Obsługa błędów płatnośći]) -.-> |extends| B
+```
+
+### Wspólny diagram
+```mermaid
+flowchart TD
+    D([Anulowanie transakcji])
+    E([Obsługa błędów płatnośći]) -.-> |Extends| B
+    A[Użytkownik] --- B([Płatność za bilet])
+    B -.-> |Include| C([Weryfikacja metody płatnośći])
+    B -.-> |Include| D
+   
+
+    F(["Wybór języka"])
+    G(["Domyślny język"])
+    H(["Lista popularnych języków"])
+    A --- F
+    
+    F -.-> |Include|G
+    F <-.- |Extend|H
+    F -.-> |Include|D
+
+ 
 ```
