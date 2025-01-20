@@ -23,9 +23,16 @@ flowchart TD
     B(["Synchronizacja danych"])
     C(["Powiadomienie o problemach synchronizacji"])
     D(["Zarządzanie dostępnością biletów"])
+    E([Logowanie do systemu])
+    F([Edytowanie listy biletów])
+    H([Zapisanie listy biletów])
+    I([Synchronizowanie listy biletów])
 
-    
-    A --- D
+    A --- E
+    A --- F
+    A --- H
+    H --- I
+    I --- D
     B -.-> |Include| D
     D -.-> |Extend| C
 ```
