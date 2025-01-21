@@ -32,14 +32,24 @@ popularnych języków)
 
 ```mermaid
 flowchart TD
+    A[Użytkownik]
     D([Anulowanie transakcji])  
     F(["Wybór języka"])
     G(["Domyślny język"])
     H(["Lista popularnych języków"])
+    I(["Rozpoczęcie interakcji"])
+    J([Wyświetlenie opcji języka])
+    K([Dostosowanie interfejsu])
+
    
-    F -.-> |Include|G
-    H <-.- |Extend|F
-    F -.-> |Include|D
+    A --> I
+    I --> J
+    I --> K
+    I -.-> |Include|G
+    H -.-> |Extend|F
+    I -.-> |Include|D
+    J ---> F
+
 ```
 
 ### Płatność za bilet
