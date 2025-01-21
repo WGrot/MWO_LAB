@@ -113,22 +113,28 @@ flowchart TD
     - Interfejs użytkownika zamyka okno zmiany języka.
 
  ```mermaid
-flowchart TD
-    D([Anulowanie transakcji])
-    E([Obsługa błędów płatnośći]) -.-> |Extends| B
-    A[Użytkownik] --- B([Płatność za bilet])
-    B -.-> |Include| C([Weryfikacja metody płatnośći])
-    B -.-> |Include| D
-   
+sequenceDiagram
+PARTICIPANT USER AS UŻYTKOWNIK
+PARTICIPANT UI AS INTERFEJS LOGOWANIA
+PARTICIPANT SERWER AS SERWER APLIKACJI
+PARTICIPANT DB AS BAZA DANYCH
 
-    F(["Wybór języka"])
-    G(["Domyślny język"])
-    H(["Lista popularnych języków"])
-    A --- F
-    
-    F -.-> |Include|G
-    F <-.- |Extend|H
-    F -.-> |Include|D
+
+    USER->>UI: Pokaż okno zmiany języków
+    UI ->> SERWER: Wybrano okno zmiany języka
+    SERWER ->> DB: Pobierz listę języków
+    DB -->> SERWER: Lista języków
+    SERWER -->> UI: Przekaż listę języków
+    UI -->> USER: Wyświetl dostępne języki
+    ALT Zmieniono język
+        USER ->> UI: Wybierz jeden z języków
+        UI ->> UI: Zmień język interfejsu
+        UI -->> USER: 
+    ELSE Anulowano
+        USER ->> UI: Anuluj zmianę języka
+        UI ->> UI: Zamknij okno zmiany języka
+        UI -->> USER: Wróc do okna głównego
+    END
 
  
 ```
