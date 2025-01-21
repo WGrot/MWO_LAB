@@ -108,3 +108,39 @@ flowchart TD
     - Baza zwraca informacje o braku dopasowania.
     - Serwer zwraca informacje o błędzie do panelu zarządzania.
     - Panel zarządzania wyświetla komunikat o błędnych danych logowania.
+ 
+sequenceDiagram
+PARTICIPANT USER AS ADMINISTRATOR
+PARTICIPANT UI AS INTERFEJS ADMINISTRATORA
+PARTICIPANT SERWER AS SERWER APLIKACJI
+PARTICIPANT DB AS BAZA DANYCH
+PARTICIPANT PROD AS BILETOMATY I APLIKACJA MOBILNA
+
+```mermaid
+sequenceDiagram
+    USER->>UI: WPROWADZENIE DANYCH LOGOWANIA
+    UI->>SERWER: PRZESŁANIE DANYCH LOGOWANIA
+    SERWER->>DB: WERYFIKACJA DANYCH
+    ALT DANE POPRAWNE
+    DB-->>SERWER: WYNIK POZYTYWNY
+    SERWER-->>UI: POTWIERDZENIE LOGOWANIA
+    UI-->>USER: WYŚWIETLENIE EKRANU GŁÓWNEGO
+    ELSE DANE BŁĘDNE
+    DB-->>SERWER: DANE NIEPOPRAWNE
+    SERWER-->>UI: INFORMACJA O BŁĘDZIE
+    UI-->>USER: WYŚWIETLENIE KOMUNIKATU O BŁĘDZIE
+    END
+
+
+    USER->>UI: Wprowadź zmiany w liście dostępnych biletów
+    UI -->> USER: 
+    USER->>UI: Zapisz zmiany
+    UI ->> SERWER: Zmieniono dostępność biletów
+    SERWER ->> DB: Zapisz zmiany 
+    DB -->> SERWER: Sukces
+    SERWER ->> PROD: Synchronizuj listę biletów
+    PROD -->> SERWER: 
+    SERWER -->> UI: Wyświetl komunikat o zapisaniu zmian
+    UI -->> USER: Wyświetl komunikat o zapisaniu zmian
+```
+    
