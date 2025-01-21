@@ -94,3 +94,41 @@ flowchart TD
 
  
 ```
+
+## DIAGRAMY SEKWENCJI
+### DIAGRAM SEKWENCJI DLA PRZYPADKU UŻYCIA ZMIANY JĘZYKA
+- AKTOR: Użytkownik.
+- OBIEKTY: Interfejs użytkownika, Serwer aplikacji, Baza danych.
+- KOLEJNOŚĆ KOMUNIKATÓW:
+    - Użytkownik uruchamia okno zmiany języka
+    - Interfejs przekazuje informacje do serwera
+    - Serwer wysyła zapytanie o dostępne języki do bazy danych.
+    - Baza danych zwraca listę dostępnych języków.
+    - Serwer wysyła informacje o dostępnych językach do interfejsu użytkownika
+    - Interfejs użytkownika wyświetla listę dostępnych języków
+    - Użytkownik wybiera jeden z dostępnych języków
+    - Interfejs użytkownika ustawia wybrany język
+- SCENARIUSZ ALTERNATYWNY 1 (Użytkownik anulował zmianę języka):
+    - Użytkonik wybiera opcję anuluj.
+    - Interfejs użytkownika zamyka okno zmiany języka.
+
+ ```mermaid
+flowchart TD
+    D([Anulowanie transakcji])
+    E([Obsługa błędów płatnośći]) -.-> |Extends| B
+    A[Użytkownik] --- B([Płatność za bilet])
+    B -.-> |Include| C([Weryfikacja metody płatnośći])
+    B -.-> |Include| D
+   
+
+    F(["Wybór języka"])
+    G(["Domyślny język"])
+    H(["Lista popularnych języków"])
+    A --- F
+    
+    F -.-> |Include|G
+    F <-.- |Extend|H
+    F -.-> |Include|D
+
+ 
+```
