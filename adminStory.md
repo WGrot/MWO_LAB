@@ -81,3 +81,30 @@ flowchart TD
     G -.-> |Extend| E
     B -.-> |Include| D
 ```
+
+
+## DIAGRAMY SEKWENCJI
+### DIAGRAM SEKWENCJI DLA PRZYPADKU UŻYCIA ZARZĄDZANIE DOSTĘPNOŚCIĄ BILETÓW
+- AKTOR: Administrator.
+- OBIEKTY: Panelu zarządzania, Serwer aplikacji, Baza danych, Biletomaty i aplikacja.
+- KOLEJNOŚĆ KOMUNIKATÓW:
+    - Administrator loguje się do panelu zarządzania
+    - Panel zarządzania przekazuje dane do serwera.
+    - Serwer wysyła zapytanie do bazy danych.
+    - Baza odpowiada.
+    - Serwer zwraca wynik do panelu zarządzania.
+    - Panel zarządzania informuje administratora o sukcesie lub błędzie.
+    - Administrator wprowadza zmiany w liście dostępnych biletów.
+    - Administrator klika przycisk "zapisz zmiany".
+    - Panel zarządzania wysyła dane o zmianach do serwera
+    - Serwer wysyła zapytanie do bazy danych o zapisanie zmian
+    - Baza danych zwraca sukces albo błąd
+    - Serwer wysyła informacje o zmianach do biletomatów i aplikacji
+    - biletomaty i aplikacje aktualizują dane o biletach
+- SCENARIUSZ ALTERNATYWNY 1 (BŁĘDNE DANE LOGOWANIA):
+    - Administrator loguje się do panelu zarządzania
+    - Panel zarządzania przekazuje dane do serwera.
+    - Serwer wysyła zapytanie do bazy danych.
+    - Baza zwraca informacje o braku dopasowania.
+    - Serwer zwraca informacje o błędzie do panelu zarządzania.
+    - Panel zarządzania wyświetla komunikat o błędnych danych logowania.
