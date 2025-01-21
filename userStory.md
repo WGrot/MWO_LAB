@@ -111,11 +111,12 @@ flowchart TD
 - SCENARIUSZ ALTERNATYWNY 1 (Użytkownik anulował zmianę języka):
     - Użytkonik wybiera opcję anuluj.
     - Interfejs użytkownika zamyka okno zmiany języka.
+    - Interfejs użytkownika wraca do okna głównego
 
  ```mermaid
 sequenceDiagram
 PARTICIPANT USER AS UŻYTKOWNIK
-PARTICIPANT UI AS INTERFEJS LOGOWANIA
+PARTICIPANT UI AS INTERFEJS UŻYTKOWNIKA
 PARTICIPANT SERWER AS SERWER APLIKACJI
 PARTICIPANT DB AS BAZA DANYCH
 
