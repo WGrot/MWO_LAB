@@ -83,6 +83,82 @@ flowchart TD
 ```
 
 ## DIAGRAMY SEKWENCJI
+### DIAGRAM SEKWENCJI DLA PRZYPADKU UŻYCIA ZARZĄDZANIE DOSTĘPNOŚCIĄ BILETÓW
+- AKTOR: Administrator.
+- OBIEKTY: Panelu zarządzania, Serwer aplikacji, Baza danych, Biletomaty i aplikacja.
+- KOLEJNOŚĆ KOMUNIKATÓW:
+    - Administrator loguje się do panelu zarządzania
+    - Panel zarządzania przekazuje dane do serwera.
+    - Serwer wysyła zapytanie do bazy danych.
+    - Baza odpowiada.
+    - Serwer zwraca wynik do panelu zarządzania.
+    - Panel zarządzania informuje administratora o sukcesie lub błędzie.
+    - Administrator wprowadza zmiany w liście dostępnych biletów.
+    - Administrator klika przycisk "zapisz zmiany".
+    - Panel zarządzania wysyła dane o zmianach do serwera
+    - Serwer wysyła zapytanie do bazy danych o zapisanie zmian
+    - Baza danych zwraca sukces albo błąd
+    - Serwer wysyła informacje o zmianach do biletomatów i aplikacji
+    - biletomaty i aplikacje aktualizują dane o biletach
+- SCENARIUSZ ALTERNATYWNY 1 (błędne dane logowania):
+    - Administrator loguje się do panelu zarządzania
+    - Panel zarządzania przekazuje dane do serwera.
+    - Serwer wysyła zapytanie do bazy danych.
+    - Baza zwraca informacje o braku dopasowania.
+    - Serwer zwraca informacje o błędzie do panelu zarządzania.
+    - Panel zarządzania wyświetla komunikat o błędnych danych logowania.
+- SCENARIUSZ ALTERNATYWNY 2 (Bład synchronizacji w produkcji)
+    - Administrator klika przycisk "zapisz zmiany".
+    - Panel zarządzania wysyła dane o zmianach do serwera
+    - Serwer wysyła zapytanie do bazy danych o zapisanie zmian
+    - Baza danych zwraca sukces albo błąd
+    - Serwer wysyła informacje o zmianach do biletomatów i aplikacji
+    - biletomaty i aplikacje napotykają bład przy synchronizacji biletów
+    - biletomaty i aplikacje informuja serwer o problemie
+    - serwer przesyła informacje o błedzie do panelu zarządzania
+    - Panel zarządzania wyświetla komunikat o błedzie
+
+```mermaid
+sequenceDiagram
+PARTICIPANT USER AS ADMINISTRATOR
+PARTICIPANT UI AS INTERFEJS ADMINISTRATORA
+PARTICIPANT SERWER AS SERWER APLIKACJI
+PARTICIPANT DB AS BAZA DANYCH
+PARTICIPANT PROD AS BILETOMATY I APLIKACJA MOBILNA
+
+
+    USER->>UI: wprowadzenie danych logowania
+    UI->>SERWER: przesłanie danych logowania
+    SERWER->>DB: weryfikacja danych
+    ALT DANE POPRAWNE
+    DB-->>SERWER: wynik pozytywny
+    SERWER-->>UI: Potwierdzenie logowania
+    UI-->>USER: Wyświetlenie ekranu głównego
+    ELSE DANE BŁĘDNE
+    DB-->>SERWER: Dane niepoprawne
+    SERWER-->>UI: Informacja o błędzie
+    UI-->>USER: Wyświetlenie komunikatu o błędzie
+    END
+
+
+    USER->>UI: Wprowadź zmiany w liście dostępnych biletów
+    UI -->> USER: 
+    USER->>UI: Zapisz zmiany
+    UI ->> SERWER: Zmieniono dostępność biletów
+    SERWER ->> DB: Zapisz zmiany 
+    DB -->> SERWER: Sukces
+    SERWER ->> PROD: Synchronizuj listę biletów
+    ALT SUKCES SYNCHRONIZACJI
+    PROD -->> SERWER: Synchronizacja powiodła się
+    SERWER -->> UI: informacja o zapisaniu zmian
+    UI -->> USER: Wyświetl komunikat o zapisaniu zmian
+    ELSE BŁĄD SYNCHRONIZACJI
+    PROD -->> SERWER: Bład podczas synchronizacji
+    SERWER -->> UI: Informacja o błedzie
+    UI -->> USER: Wyświetl komunikat o błędzie
+    END
+```
+    
 ### Monitorowanie wyników sprzedaży
 - AKTOR: Administrator.
 - OBIEKTY: SYSTEM RAPORTOWY, SERWER APLIKACJI
