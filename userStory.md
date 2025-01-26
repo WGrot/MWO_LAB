@@ -89,21 +89,38 @@ flowchart TD
 ### Wspólny diagram
 ```mermaid
 flowchart TD
+    A[Użytkownik]
+    B([Płatność za bilet])
+    C([Weryfikacja metody płatnośći])
     D([Anulowanie transakcji])
-    E([Obsługa błędów płatnośći]) -.-> |Extends| B
-    A[Użytkownik] --- B([Płatność za bilet])
-    B -.-> |Include| C([Weryfikacja metody płatnośći])
-    B -.-> |Include| D
-   
+    E([Obsługa błędów płatnośći])
+    F([Wybór metody płatności])
+    I([Zrealizowanie płatności])
+    J([Potwierdzenie transakcji])
+    X(["Wybór języka"])
+    Y(["Domyślny język"])
+    Z(["Lista popularnych języków"])
+    V(["Rozpoczęcie interakcji"])
+    P([Wyświetlenie opcji języka])
+    O([Dostosowanie interfejsu])
 
-    F(["Wybór języka"])
-    G(["Domyślny język"])
-    H(["Lista popularnych języków"])
-    A --- F
-    
-    F -.-> |Include|G
-    F <-.- |Extend|H
-    F -.-> |Include|D
+    A --> B
+    A --> F
+    A --> I
+    A --> J
+    F -.-> |Include| C
+    B -.-> |Include| D
+    E -.-> |extends| B
+
+
+   
+    A --> V
+    V --> P
+    V --> O
+    V -.-> |Include|Y
+    Z -.-> |Extend|X
+    V -.-> |Include|D
+    P ---> X
 
  
 ```
