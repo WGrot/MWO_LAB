@@ -116,8 +116,8 @@ flowchart TD
     - Serwer wysyła informacje o zmianach do biletomatów i aplikacji
     - biletomaty i aplikacje napotykają bład przy synchronizacji biletów
     - biletomaty i aplikacje informuja serwer o problemie
-    - serwer przesyła informacje o błedzie do UI
-    - Ui wyświetla komunikat o błedzie
+    - serwer przesyła informacje o błedzie do panelu zarządzania
+    - Panel zarządzania wyświetla komunikat o błedzie
 
 ```mermaid
 sequenceDiagram
