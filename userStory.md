@@ -67,10 +67,23 @@ transakcji).
 
 ```mermaid
 flowchart TD
-    A[Użytkownik] -->B([Płatność za bilet])
-    B -.-> |Include| C([Weryfikacja metody płatnośći])
-    B -.-> |Include| D([Anulowanie transakcji])
-    E([Obsługa błędów płatnośći]) -.-> |extends| B
+    A[Użytkownik]
+    B([Płatność za bilet])
+    C([Weryfikacja metody płatnośći])
+    D([Anulowanie transakcji])
+    E([Obsługa błędów płatnośći])
+    F([Wybór metody płatności])
+    I([Zrealizowanie płatności])
+    J([Potwierdzenie transakcji])
+
+
+    A --> B
+    A --> F
+    A --> I
+    A --> J
+    F -.-> |Include| C
+    B -.-> |Include| D
+    E -.-> |extends| B
 ```
 
 ### Wspólny diagram
