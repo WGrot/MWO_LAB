@@ -74,21 +74,37 @@ flowchart TD
 ```mermaid
 flowchart TD
     A("Administrator")
+    X([Monitorowanie wyników sprzedaży])
+    Y([Analiza danych sprzedaży])
+    Z([Powiadomienie o niezgodnościach w danych sprzedaży])
+    O([Powiadomienie o błędach danych])
+    M([Logowanie do systemu raportowego])
+    N([Przegląd raportów sprzedaży])
+    P([Eksport raportów])
+
     B(["Synchronizacja danych"])
     C(["Powiadomienie o problemach synchronizacji"])
     D(["Zarządzanie dostępnością biletów"])
-    E([Monitorowanie wyników sprzedaży])
-    F([Analiza danych sprzedaży z bazy danych])
-    G([Powiadomienie o niezgodnościach w danych sprzedaży])
+    E([Logowanie do systemu])
+    F([Edytowanie listy biletów])
+    H([Zapisanie listy biletów])
+    I([Synchronizowanie listy biletów])
 
-    
-    A --- D
+    A --- X
+    A --- Z
+    A --- M
+    A --- P
+    A --- N
+    X -.-> |Include| Y
+    O -.-> |Extend| Z
 
-    D -.-> |Extend| C
     A --- E
-    F -.-> |Include| E
-    G -.-> |Extend| E
+    A --- F
+    A --- H
+    H --- I
+    I --- D
     B -.-> |Include| D
+    D -.-> |Extend| C
 ```
 
 ## DIAGRAMY SEKWENCJI
