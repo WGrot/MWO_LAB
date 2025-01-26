@@ -52,13 +52,22 @@ raportów).
 ```mermaid
 flowchart TD
     A("Administrator")
-    E([Monitorowanie wyników sprzedaży])
-    F([Analiza danych sprzedaży z bazy danych])
-    G([Powiadomienie o niezgodnościach w danych sprzedaży])
+    X([Monitorowanie wyników sprzedaży])
+    Y([Analiza danych sprzedaży])
+    Z([Powiadomienie o niezgodnościach w danych sprzedaży])
+    O([Powiadomienie o błędach danych])
+    M([Logowanie do systemu raportowego])
+    N([Przegląd raportów sprzedaży])
+    P([Eksport raportów])
 
-    A --- E
-    F -.-> |Include| E
-    G -.-> |Extend| E
+
+    A --- X
+    A --- Z
+    A --- M
+    A --- P
+    A --- N
+    X -.-> |Include| Y
+    O -.-> |Extend| Z
 ```
 
 ## Wspólny diagram
