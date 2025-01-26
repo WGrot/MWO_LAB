@@ -82,7 +82,6 @@ flowchart TD
     B -.-> |Include| D
 ```
 
-
 ## DIAGRAMY SEKWENCJI
 ### DIAGRAM SEKWENCJI DLA PRZYPADKU UŻYCIA ZARZĄDZANIE DOSTĘPNOŚCIĄ BILETÓW
 - AKTOR: Administrator.
@@ -160,3 +159,39 @@ PARTICIPANT PROD AS BILETOMATY I APLIKACJA MOBILNA
     END
 ```
     
+### Monitorowanie wyników sprzedaży
+- AKTOR: Administrator.
+- OBIEKTY: SYSTEM RAPORTOWY, SERWER APLIKACJI
+- KOLEJNOŚĆ KOMUNIKATÓW:
+    - Administrator loguje się do systemu raportowego
+    - System raportowy pobiera dostępne raport.
+    - Serwer aplikacji zwraca listę dostępnych raportów.
+    - Administrator analizuje dane o sprzedaży na poziomie globalnym i lokalnym 
+    - Administrator eksportuje raporty do dalszej analizy 
+    - System raportowy do eksportuje raporty serwera aplikacji
+- SCENARIUSZ ALTERNATYWNY 1 (Brak dostępnych raportów ):
+    - Serwer aplikacji zwraca błąd
+    - System raportowy wyświetla komunikat błędu
+
+```mermaid
+sequenceDiagram
+PARTICIPANT ADMIN AS ADMINISTRATOR
+PARTICIPANT UI AS SISYSTEM RAPORTOWY
+PARTICIPANT SERWER AS SERWER APLIKACJI
+
+ADMIN ->> UI: Logowanie do systemu raportowego
+UI ->> SERWER: Pobierz raporty
+alt Raporty dostępne
+    SERWER ->> UI: Lista Raportów
+    UI ->> ADMIN: 
+    ADMIN ->> ADMIN: Analizuj rapoty
+    ADMIN ->> UI: Eksportuj raporty
+    UI ->> SERWER: Eksportuj raporty
+    SERWER ->> UI: 
+    UI ->> ADMIN: 
+else Brak dostępnych raportów 
+    SERWER ->> UI: Błąd
+    UI ->> UI: Wyświetl błąd
+    UI ->> ADMIN: 
+end
+```

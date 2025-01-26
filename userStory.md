@@ -94,3 +94,97 @@ flowchart TD
 
  
 ```
+
+## DIAGRAMY SEKWENCJI
+### DIAGRAM SEKWENCJI DLA PRZYPADKU UŻYCIA ZMIANY JĘZYKA
+- AKTOR: Użytkownik.
+- OBIEKTY: Interfejs użytkownika, Serwer aplikacji, Baza danych.
+- KOLEJNOŚĆ KOMUNIKATÓW:
+    - Użytkownik uruchamia okno zmiany języka
+    - Interfejs przekazuje informacje do serwera
+    - Serwer wysyła zapytanie o dostępne języki do bazy danych.
+    - Baza danych zwraca listę dostępnych języków.
+    - Serwer wysyła informacje o dostępnych językach do interfejsu użytkownika
+    - Interfejs użytkownika wyświetla listę dostępnych języków
+    - Użytkownik wybiera jeden z dostępnych języków
+    - Interfejs użytkownika ustawia wybrany język
+- SCENARIUSZ ALTERNATYWNY 1 (Użytkownik anulował zmianę języka):
+    - Użytkonik wybiera opcję anuluj.
+    - Interfejs użytkownika zamyka okno zmiany języka.
+    - Interfejs użytkownika wraca do okna głównego
+
+ ```mermaid
+sequenceDiagram
+PARTICIPANT USER AS UŻYTKOWNIK
+PARTICIPANT UI AS INTERFEJS UŻYTKOWNIKA
+PARTICIPANT SERWER AS SERWER APLIKACJI
+PARTICIPANT DB AS BAZA DANYCH
+
+
+    USER->>UI: Pokaż okno zmiany języków
+    UI ->> SERWER: Wybrano okno zmiany języka
+    SERWER ->> DB: Pobierz listę języków
+    DB -->> SERWER: Lista języków
+    SERWER -->> UI: Przekaż listę języków
+    UI -->> USER: Wyświetl dostępne języki
+    ALT Zmieniono język
+        USER ->> UI: Wybierz jeden z języków
+        UI ->> UI: Zmień język interfejsu
+        UI -->> USER: 
+    ELSE Anulowano
+        USER ->> UI: Anuluj zmianę języka
+        UI ->> UI: Zamknij okno zmiany języka
+        UI -->> USER: Wróc do okna głównego
+    END
+
+ 
+```
+
+### DIAGRAM SEKWENCJI DLA PRZYPADKU PŁATNOŚĆ ZA BILET
+- AKTOR: UŻYTKOWNIK.
+- OBIEKTY: BILETOMAT SYSTEM BANKOWY.
+- KOLEJNOŚĆ KOMUNIKATÓW:
+    - Użytkownik wybiera metodę płatności.
+    - Biletomat weryfikacje dostępność wybranej metody.
+    - System Bankowy zwraca dostępność metody płatności
+    - Użytkownik dokonuje płatności.
+    - Biletomat wykonuje płatność.
+    - System Bankowy potwierdzenie transakcji.
+    - Biletomat wyświetla potwierdzenie zakończenia transakcji.
+    - Biletomat wydaje bilety.
+    - Użytkownik odbiera bilety.
+
+- SCENARIUSZ ALTERNATYWNY 1 (wybrana metoda jest nie dostępna):
+    - Użytkownik wybiera metodę płatności.
+    - System Biletomat weryfikuje dostępność wybranej metody.
+    - System Bankowy zwraca błąd.
+    - Biletomat wyświetla błąd niedostępności medoty płatności.
+
+- SCENARIUSZ ALTERNATYWNY 2 (Brak środków):
+    - Użytkownik dokonuje płatności.
+    - Biletomat wykonuje płatność.
+    - System Bankowy zwraca błąd płatnoći.
+    - Biletomat wyświetla błąd "brak środków". 
+
+```mermaid
+sequenceDiagram
+    Użytkownik->>Biletomat: Wybór metody płatności
+    Biletomat->>System Bankowy: Weryfikacja dostępnej metody
+    alt metoda dostępna
+    System Bankowy->>Biletomat: Poprawna metoda
+    Biletomat->>Użytkownik: 
+    Użytkownik->>Biletomat: Dokonaj płatności
+    Biletomat->>System Bankowy: Wykonaj Płatność
+    alt Brak środków
+    System Bankowy->>Biletomat: Błąd transakcji
+    Biletomat ->> Użytkownik: Wyświetl błąd "brak środków" 
+    end
+    System Bankowy->>Biletomat: Potwierdzenei transakcji
+    Biletomat-->>Użytkownik:  Wyświetl potwierdzenie płatności
+    Biletomat->>Użytkownik: Wydaj bilety
+    else metoda nie dostępna
+    System Bankowy->>Biletomat: Niedostępna metoda
+    Biletomat ->> Użytkownik: Wyświetla błąd niedostępności medoty płatności
+    end
+```
+
