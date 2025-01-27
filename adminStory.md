@@ -220,3 +220,103 @@ else Brak dostępnych raportów
     UI ->> ADMIN: 
 end
 ```
+
+
+## OPIS KLAS MONITOROWANIE WYNIKÓW SPRZEDAŻY
+### KLASY
+#### ADMINISTRATOR  
+- **ATRYBUTY:**
+  - `INT ID`
+  - `STRING USERNAME`   
+  - `STRING PASSWORD` 
+  - `BOOLEAN ISLOGGEDIN`   
+
+- **METODY:**  
+  - `VOID LOGIN(STRING USERNAME, STRING PASSWORD)` .
+  - `VOID EXPORT_DATA(SALESREPORT SALEREPORT)`  
+  - `VOID LOGOUT()`   
+
+#### SALESREPORT  
+- **ATRYBUTY:**  
+  - `DATE REPORTDATE` 
+  - `LIST<STRING> SALESDATA`   
+  - `DOUBLE TOTALSALES` 
+
+- **METODY:**  
+  - `LIST<STRING> SEEDATA()` 
+  - `VOID EXPORT_REPORT()`.  
+
+#### REPORTINGSYSTEM  
+- **ATRYBUTY:**  
+  - `LIST<SALESREPORT> REPORTHISTORY`  
+
+- **METODY:**  
+  - `SALESREPORT GENERATEREPORT()`
+  - `LIST<SALESREPORT> GETREPORTS()`
+  - `BOOLEAN SYNCHRONIZEDATA()`
+  - `VOID SHOWERROR()`
+
+#### APP_SERWER  
+- **ATRYBUTY:**  
+  - `BOOL IS_ON`  
+
+- **METODY:**  
+  - `LIST<SALESREPORT> GET_REPORT_LIST()`    
+  - `BOOLEAN SYNCHRONIZEDATA()`
+  - `VOID SAVEEXPORTEDREPORT(SALEREPORT SALEREPORT)`
+  - `BOOL REPORTERROR()`
+
+
+### RELACJE:
+- `ADMINISTRATOR` jest powiązany z `REPORTINGSYSTEM` (asocjacja).  
+- `REPORTINGSYSTEM` generuje `SALESREPORT`, które są dostępne dla administratora.  
+- `ADMINISTRATOR` korzysta z `SALESREPORT` do przeglądania, analizy i eksportu danych sprzedaży.  
+- `REPORTINGSYSTEM` synchronizuje dane z `APPSERWER`
+
+```mermaid
+classDiagram
+
+    Administrator --> ReportingSystem: używa
+    Administrator --> SalesReport: przegląda
+    ReportingSystem --> SalesReport: generuje
+    ReportingSystem -- AppSerwer: synchronizacja
+
+    class Administrator{
+      -int id
+      -string username
+      -string password
+      -bool isLoggedIn
+
+      +void Login(String password, String Username)
+      +void Logout()
+      +void ExportData(SalesReport salesReport)
+    }
+
+    class SalesReport{
+      -Date reportDate
+      -List<String> salesData
+      -double totalsales
+
+      +List<String> SeeData()
+      +vois ExportReport()
+      
+    }
+
+    class ReportingSystem{
+      -List<SalesReport> ReportHistory
+
+      +SaleReport GenerateReport()
+      +List<SalesReport> GetReports()
+      +bool SynchronizeData()
+      +void ShowError()
+    }
+    class AppSerwer{
+      -bool isOn
+      
+      +List<SalesReport> GetReportList()
+      +bool SynchronizeData()
+      +void ShowExportedReport(SaleReport salereport)
+      +bool ReportRrror()
+    }
+
+```
