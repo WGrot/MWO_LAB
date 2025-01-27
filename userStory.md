@@ -319,7 +319,7 @@ classDiagram
 ```
 
 
-## OPIS KLAS Płatność za bilet
+## OPIS KLAS Zmiana języka
 ### KLASY
 #### USER  
 **METHODS:**  
