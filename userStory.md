@@ -318,6 +318,7 @@ classDiagram
     }
 ```
 
+
 ## OPIS KLAS Płatność za bilet
 ### KLASY
 #### USER  
@@ -389,6 +390,5 @@ class Language {
   - id: int
   - name: String
 }
-
 ```
 
