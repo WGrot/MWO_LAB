@@ -220,3 +220,56 @@ else Brak dostępnych raportów
     UI ->> ADMIN: 
 end
 ```
+
+
+## OPIS KLAS MONITOROWANIE WYNIKÓW SPRZEDAŻY
+### KLASY
+#### ADMINISTRATOR  
+- **ATRYBUTY:**
+  - `INT ID`
+  - `STRING USERNAME`   
+  - `STRING PASSWORD` 
+  - `BOOLEAN ISLOGGEDIN`   
+
+- **METODY:**  
+  - `VOID LOGIN(STRING USERNAME, STRING PASSWORD)` .
+  - `VOID EXPORT_DATA(SALESREPORT SALEREPORT)`  
+  - `VOID LOGOUT()`   
+
+#### SALESREPORT  
+- **ATRYBUTY:**  
+  - `DATE REPORTDATE` 
+  - `LIST<STRING> SALESDATA`   
+  - `DOUBLE TOTALSALES` 
+
+- **METODY:**  
+  - `LIST<STRING> VIEWREPORTS()` 
+  - `VOID EXPORT_REPORT(SALESREPORT SALEREPORT)`.  
+
+#### REPORTINGSYSTEM  
+- **ATRYBUTY:**  
+  - `LIST<SALESREPORT> REPORTHISTORY`  
+
+- **METODY:**  
+  - `SALESREPORT GENERATEREPORT()`
+  - `LIST<SALESREPORT> GETREPORTS()`
+  - `BOOLEAN SYNCHRONIZEDATA()`
+  - `VOID SHOWERROR()`
+
+#### APP_SERWER  
+- **ATRYBUTY:**  
+  - `BOOL IS_ON`  
+
+- **METODY:**  
+  - `LIST<SALESREPORT> GET_REPORT_LIST()`  
+  - `LIST<SALESREPORT> GETREALTIMEREPORTS()`   
+  - `BOOLEAN SYNCHRONIZEDATA()`
+  - `VOID SAVEEXPORTEDREPORT(SALEREPORT SALEREPORT`
+  - `BOOL REPORTERROR()`
+
+
+### RELACJE:
+- `ADMINISTRATOR` jest powiązany z `REPORTINGSYSTEM` (asocjacja).  
+- `REPORTINGSYSTEM` generuje `SALESREPORT`, które są dostępne dla administratora.  
+- `ADMINISTRATOR` korzysta z `SALESREPORT` do przeglądania, analizy i eksportu danych sprzedaży.  
+- `REPORTINGSYSTEM` synchronizuje dane z innymi systemami w czasie rzeczywistym.
