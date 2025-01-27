@@ -320,3 +320,82 @@ classDiagram
     }
 
 ```
+
+## OPIS KLAS ZARZĄDZANIE DOSTĘPNOŚCIĄ BILETÓW
+### KLASY
+
+#### USER  
+**METHODS:**  
+- `VOID openLanguageChangeWindow()`: Opens the language change window for the user.  
+- `VOID selectLanguage()`: Allows the user to select a language from the available options.  
+- `VOID cancelLanguageChange()`: Cancels the language change process initiated by the user.  
+
+#### USERINTERFACE  
+**ATTRIBUTES:**  
+- `STRING currentLanguage`: Stores the current language selected by the user.  
+
+**METHODS:**  
+- `VOID showLanguageChangeWindow()`: Displays the language change window to the user.  
+- `VOID setLanguage(STRING language)`: Sets the chosen language in the system based on user selection.  
+- `VOID closeLanguageChangeWindow()`: Closes the language change window after the user has made a selection.  
+- `VOID displayAvailableLanguages(LIST<String> languages)`: Displays a list of available languages to the user for selection.  
+
+#### APPLICATIONSERVER  
+**METHODS:**  
+- `LIST<String> getLanguageList()`: Retrieves the list of available languages from the application server.  
+
+#### DATABASE  
+**METHODS:**  
+- `LIST<String> getLanguageList()`: Fetches the list of available languages from the database.  
+
+#### LANGUAGE  
+**ATTRIBUTES:**  
+- `INT id`: The unique identifier of the language.  
+- `STRING name`: The name of the language.  
+
+---
+
+### RELATIONSHIPS:
+
+- `USER` uses `USERINTERFACE` (ASSOCIATION).  
+- `USERINTERFACE` communicates with `APPLICATIONSERVER` (ASSOCIATION).  
+- `APPLICATIONSERVER` retrieves data from `DATABASE` (ASSOCIATION).  
+
+```mermaid
+classDiagram
+
+%% Classes
+class User {
+  + openLanguageChangeWindow(): void
+  + selectLanguage(): void
+  + cancelLanguageChange(): void
+}
+
+class UserInterface {
+  - currentLanguage: String
+  + showLanguageChangeWindow(): void
+  + setLanguage(language: String): void
+  + closeLanguageChangeWindow(): void
+  + displayAvailableLanguages(languages: List&lt;String>): void
+}
+
+class ApplicationServer {
+  + getLanguageList(): List&lt;String>
+}
+
+class Database {
+  + getLanguageList(): List&lt;String>
+}
+
+%% Relationships
+User --> UserInterface : uses
+UserInterface --> ApplicationServer : communicates with
+ApplicationServer --> Database : retrieves data
+
+%% Attributes and Helper Methods
+class Language {
+  - id: int
+  - name: String
+}
+
+```
