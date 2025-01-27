@@ -224,13 +224,12 @@ sequenceDiagram
 #### PAYMENTMETHOD  
 - **ATRYBUTY:** `STRING METHODNAME`, `BOOLEAN ISAVAILABLE` , `INT ID` 
 - **METODY:**  
-  - `VOID CHECKAVAILABILITY()`  
-  - `VOID SELECTMETHOD(STRING METHODNAME)`
+  - `BOOL CHECKAVAILABILITY()`  
 
 #### PAYMENT  
 - **ATRYBUTY:** `DOUBLE AMOUNT`, `STRING STATUS`, `DATE TRANSACTIONDATE`, `INT ID`  
 - **METODY:**  
-  - `BOOLEAN PROCESSPAYMENT(PAYMENTMETHOD METHOD)`  
+  - `BOOLEAN PROCESSPAYMENT()`  
   - `VOID CANCELPAYMENT()`
 
 #### USER  
@@ -242,11 +241,10 @@ sequenceDiagram
   - `VOID CLAIM_TICKETS()`
 
 ####  TICKET_MACHINE
-- **ATRYBUTY:** `INT MACHINE_ID`, `BOOLEAN ISAVAILABLE`, `INT ID`  
+- **ATRYBUTY:** `INT MACHINE_ID`, `BOOLEAN ISAVAILABLE` 
 - **METODY:**  
   - `BOOL CHECK_PAYMENTMETHOD_AVAILABILITY(PAYMENTMETHOD METHOD)`  
-  - `VOID DISPLAYCONFIRMATION()`
-  - `VOID SHOW_CONFIRMATION(PAYMENT PAYMENT)`
+  - `VOID DISPLAYCONFIRMATION(PAYMENT PAYMENT)`
   - `VOID PRINT_TICKETS`
   - `VOID SHOW_ERROR()`
 
@@ -255,11 +253,67 @@ sequenceDiagram
 - **METODY:**
   - `BOOL CHECK_PAYMENTMETHOD_AVAILABILITY(PAYMENTMETHOD METHOD)`
   - `VOID VERIFYMETHOD(PAYMENTMETHOD METHOD)`  
-  - `VOID CONFIRMPAYMENT(PAYMENT PAYMENT)`
+  - `BOOL CONFIRMPAYMENT(PAYMENT PAYMENT)`
 
 ### RELACJE:
 - `USER` jest powiązany z `PAYMENT` (asocjacja).
 - `TICKET_MACHINE` korzysta z `BANK_SYSTEM` do weryfikacji transakcji.
 -  `TICKET_MACHINE` korzysta z `BANK_SYSTEM` do sprawdzenia dostępnych metod transakcji.
 - `BANK_SYSTEM` zarządza `PAYMENTMETHOD` i weryfikuje dostępność metod płatności.
-- - `BANK_SYSTEM` zarządza `PAYMENT` i potwierdza transakcje.
+- `BANK_SYSTEM` zarządza `PAYMENT` i potwierdza transakcje.
+- `PAYMENT` ma przypisane `PAYMENTMETHOD`
+
+
+
+```mermaid
+classDiagram
+
+    Payment --> User: Ma przypisanego
+    User --> TicketMachine: Używa
+    TicketMachine -- BankSystem: komunikuje się
+    Payment *-- PaymentMethod
+    BankSystem -- PaymentMethod
+    BankSystem --> Payment: zarządza
+
+
+    class User{
+      -int id
+      +void InitiatePayment(Payment payment)
+      +PaymentMethod ChooseMethod()
+      +void CancelTransaction(Payment payment)
+      +void ClaimTickets()
+    }
+
+    class PaymentMethod{
+      -String methodName
+      -bool isAvailable
+      -int id
+      +bool CheckAvailabilyty()
+      
+    }
+    class Payment{
+      -int id
+      -double amount
+      -String status
+      -Date transactionDate
+
+      +bool processPayment()
+      +void cancelPayment()
+    }
+    class TicketMachine{
+      -int machineId
+      -bool isAvailable
+      
+      +bool ChackPaymentMethodAvailability()
+      +void DisplayConfirmation(Payment payment)
+      +void PrintTickets()
+      +void ShowError()
+    }
+
+    class BankSystem{
+      -List<PaymentMethod> availableMethods
+      +bool CheckPaymentMethodAvailability()
+      +void verifyMethod()
+      +bool ConfirmPayment()
+    }
+```
