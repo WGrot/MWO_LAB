@@ -318,7 +318,6 @@ classDiagram
     }
 ```
 
-
 ## OPIS KLAS Zmiana języka
 ### KLASY
 #### USER  
