@@ -243,8 +243,8 @@ end
   - `DOUBLE TOTALSALES` 
 
 - **METODY:**  
-  - `LIST<STRING> VIEWREPORTS()` 
-  - `VOID EXPORT_REPORT(SALESREPORT SALEREPORT)`.  
+  - `LIST<STRING> SEEDATA()` 
+  - `VOID EXPORT_REPORT()`.  
 
 #### REPORTINGSYSTEM  
 - **ATRYBUTY:**  
@@ -261,10 +261,9 @@ end
   - `BOOL IS_ON`  
 
 - **METODY:**  
-  - `LIST<SALESREPORT> GET_REPORT_LIST()`  
-  - `LIST<SALESREPORT> GETREALTIMEREPORTS()`   
+  - `LIST<SALESREPORT> GET_REPORT_LIST()`    
   - `BOOLEAN SYNCHRONIZEDATA()`
-  - `VOID SAVEEXPORTEDREPORT(SALEREPORT SALEREPORT`
+  - `VOID SAVEEXPORTEDREPORT(SALEREPORT SALEREPORT)`
   - `BOOL REPORTERROR()`
 
 
@@ -272,4 +271,52 @@ end
 - `ADMINISTRATOR` jest powiązany z `REPORTINGSYSTEM` (asocjacja).  
 - `REPORTINGSYSTEM` generuje `SALESREPORT`, które są dostępne dla administratora.  
 - `ADMINISTRATOR` korzysta z `SALESREPORT` do przeglądania, analizy i eksportu danych sprzedaży.  
-- `REPORTINGSYSTEM` synchronizuje dane z innymi systemami w czasie rzeczywistym.
+- `REPORTINGSYSTEM` synchronizuje dane z `APPSERWER`
+
+```mermaid
+classDiagram
+
+    Administrator --> ReportingSystem: używa
+    Administrator --> SalesReport: przegląda
+    ReportingSystem --> SalesReport: generuje
+    ReportingSystem -- AppSerwer: synchronizacja
+
+    class Administrator{
+      -int id
+      -string username
+      -string password
+      -bool isLoggedIn
+
+      +void Login(String password, String Username)
+      +void Logout()
+      +void ExportData(SalesReport salesReport)
+    }
+
+    class SalesReport{
+      -Date reportDate
+      -List<String> salesData
+      -double totalsales
+
+      +List<String> SeeData()
+      +vois ExportReport()
+      
+    }
+
+    class ReportingSystem{
+      -List<SalesReport> ReportHistory
+
+      +SaleReport GenerateReport()
+      +List<SalesReport> GetReports()
+      +bool SynchronizeData()
+      +void ShowError()
+    }
+    class AppSerwer{
+      -bool isOn
+      
+      +List<SalesReport> GetReportList()
+      +bool SynchronizeData()
+      +void ShowExportedReport(SaleReport salereport)
+      +bool ReportRrror()
+    }
+
+```
