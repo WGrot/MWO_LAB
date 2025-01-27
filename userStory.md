@@ -262,3 +262,4 @@ sequenceDiagram
 - `TICKET_MACHINE` korzysta z `BANK_SYSTEM` do weryfikacji transakcji.
 -  `TICKET_MACHINE` korzysta z `BANK_SYSTEM` do sprawdzenia dostępnych metod transakcji.
 - `BANK_SYSTEM` zarządza `PAYMENTMETHOD` i weryfikuje dostępność metod płatności.
+- - `BANK_SYSTEM` zarządza `PAYMENT` i potwierdza transakcje.
