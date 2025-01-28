@@ -201,20 +201,23 @@ sequenceDiagram
     Użytkownik->>Biletomat: Wybór metody płatności
     Biletomat->>System Bankowy: Weryfikacja dostępnej metody
     alt metoda dostępna
-    System Bankowy->>Biletomat: Poprawna metoda
-    Biletomat->>Użytkownik: 
+    System Bankowy-->>Biletomat: Poprawna metoda
+    Biletomat-->>Użytkownik: 
     Użytkownik->>Biletomat: Dokonaj płatności
     Biletomat->>System Bankowy: Wykonaj Płatność
     alt Brak środków
-    System Bankowy->>Biletomat: Błąd transakcji
-    Biletomat ->> Użytkownik: Wyświetl błąd "brak środków" 
+    System Bankowy-->>Biletomat: Błąd transakcji
+    Biletomat ->> Biletomat: Wyświetl błąd "brak środków" 
+    Biletomat -->> Użytkownik: 
     end
-    System Bankowy->>Biletomat: Potwierdzenei transakcji
-    Biletomat-->>Użytkownik:  Wyświetl potwierdzenie płatności
-    Biletomat->>Użytkownik: Wydaj bilety
+    System Bankowy-->>Biletomat: Potwierdzenei transakcji
+    Biletomat->>Biletomat:  Wyświetl potwierdzenie płatności
+    Biletomat->>Biletomat: Wydaj bilety
+    Biletomat-->>Użytkownik: 
     else metoda nie dostępna
-    System Bankowy->>Biletomat: Niedostępna metoda
-    Biletomat ->> Użytkownik: Wyświetla błąd niedostępności medoty płatności
+    System Bankowy-->>Biletomat: Niedostępna metoda
+    Biletomat ->> Biletomat: Wyświetl błąd niedostępności medoty płatności
+    Biletomat -->> Użytkownik: 
     end
 ```
 # DIAGRAMY KLAS
