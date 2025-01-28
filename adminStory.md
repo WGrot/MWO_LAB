@@ -201,23 +201,23 @@ PARTICIPANT PROD AS BILETOMATY I APLIKACJA MOBILNA
 ```mermaid
 sequenceDiagram
 PARTICIPANT ADMIN AS ADMINISTRATOR
-PARTICIPANT UI AS SISYSTEM RAPORTOWY
+PARTICIPANT UI AS SYSTEM RAPORTOWY
 PARTICIPANT SERWER AS SERWER APLIKACJI
 
 ADMIN ->> UI: Logowanie do systemu raportowego
 UI ->> SERWER: Pobierz raporty
 alt Raporty dostępne
-    SERWER ->> UI: Lista Raportów
+    SERWER -->> UI: Lista Raportów
     UI ->> ADMIN: 
     ADMIN ->> ADMIN: Analizuj rapoty
     ADMIN ->> UI: Eksportuj raporty
     UI ->> SERWER: Eksportuj raporty
-    SERWER ->> UI: 
-    UI ->> ADMIN: 
+    SERWER -->> UI: 
+    UI -->> ADMIN: 
 else Brak dostępnych raportów 
-    SERWER ->> UI: Błąd
+    SERWER -->> UI: Błąd
     UI ->> UI: Wyświetl błąd
-    UI ->> ADMIN: 
+    UI -->> ADMIN: 
 end
 ```
 
